@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+<meta name="theme-color" content="#0b1020"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Nobitex Hunter God"/>
+<title>Nobitex Hunter · God Mode</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0b1020;color:#e2e8f0;font-family:Tahoma,Arial,system-ui,sans-serif;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+.wrap{max-width:480px;margin:0 auto;padding:0 12px 110px}
+header{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.97);border-bottom:1px solid #2a3550;padding:12px 16px;padding-top:max(12px,env(safe-area-inset-top))}
+header .row{display:flex;align-items:center;justify-content:space-between}
+header h1{font-size:17px;font-weight:800}
+header h1 span{color:#fbbf24;font-size:11px}
+header .sub{font-size:11px;color:#94a3b8;margin-top:2px}
+.badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:#1e293b}
+.btn-icon{font-size:12px;background:#1e293b;border:1px solid #334155;padding:6px 10px;border-radius:8px;color:#e2e8f0;cursor:pointer}
+.scan-wrap{padding:12px 16px 0}
+.scan-btn{width:100%;background:linear-gradient(135deg,#65a30d,#4d7c0f);color:#fff;border:none;border-radius:16px;padding:15px;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:0 8px 24px rgba(101,163,13,.35)}
+.scan-btn:active{opacity:.9}
+.scan-btn:disabled{opacity:.7;cursor:wait}
+.hint{text-align:center;font-size:11px;color:#64748b;margin-top:8px}
+.mode{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.mode button{flex:1;min-width:70px;padding:8px 4px;border-radius:10px;border:1px solid #334155;background:#1e293b;color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer}
+.mode button.on{background:#365314;border-color:#65a30d;color:#d9f99d}
+.god-btn{width:100%;margin-top:8px;background:#1e1b4b;border:1px solid #4c1d95;color:#c4b5fd;border-radius:12px;padding:12px;font-size:13px;font-weight:700;cursor:pointer}
+.god-btn.on{background:linear-gradient(135deg,#5b21b6,#7c3aed);border-color:#a78bfa;color:#fff;box-shadow:0 0 20px rgba(124,58,237,.4)}
+.auto-btn{width:100%;margin-top:6px;background:#1e293b;border:1px solid #334155;color:#94a3b8;border-radius:12px;padding:10px;font-size:12px;font-weight:600;cursor:pointer}
+.auto-btn.on{background:#14532d;border-color:#65a30d;color:#86efac}
+.tabs{display:flex;border-bottom:1px solid #2a3550;margin-top:12px;position:sticky;top:52px;z-index:40;background:rgba(11,16,32,.95)}
+.tabs button{flex:1;padding:11px 2px;background:none;border:none;color:#94a3b8;font-size:11px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent}
+.tabs button.on{color:#a3e635;border-bottom-color:#a3e635}
+.card{background:linear-gradient(165deg,#172033,#0f172a);border:1px solid #2a3550;border-radius:14px;padding:14px;margin-bottom:10px}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;text-align:center}
+.stats .lab{font-size:9px;color:#64748b}
+.stats .val{font-size:13px;font-weight:700;margin-top:2px}
+.green{color:#4ade80}.violet{color:#a78bfa}.amber{color:#fbbf24}.red{color:#f87171}.gold{color:#fbbf24}
+.b-pre{background:#14532d;color:#86efac}
+.b-early{background:#3f6212;color:#bef264}
+.b-conf{background:#7c2d12;color:#fdba74}
+.b-watch{background:#4c1d95;color:#c4b5fd}
+.b-god{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff}
+.b-long{background:#14532d;color:#86efac}
+.b-short{background:#7f1d1d;color:#fca5a5}
+.tag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;display:inline-block}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-top:10px;text-align:center;font-size:11px}
+.grid4>div{background:rgba(30,41,59,.85);border-radius:8px;padding:6px 4px}
+.grid4 .l{color:#64748b;font-size:9px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;text-align:center;font-size:11px}
+.grid3>div{background:#1e293b;border-radius:8px;padding:6px}
+.empty{text-align:center;padding:36px 16px;color:#94a3b8;font-size:14px}
+.empty .ico{font-size:36px;opacity:.35;margin-bottom:8px}
+.row2{display:flex;justify-content:space-between;align-items:flex-start}
+.score{font-size:22px;font-weight:800;margin-top:2px}
+.spin{width:18px;height:18px;border:3px solid #334155;border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.hidden{display:none!important}
+input[type=number]{width:100%;background:#0f172a;border:1px solid #475569;border-radius:8px;padding:10px;color:#e2e8f0;font-size:16px}
+.flex{display:flex;gap:8px;margin-top:10px}
+.flex button{background:#2563eb;color:#fff;border:none;border-radius:8px;padding:10px 14px;font-size:13px;font-weight:600;cursor:pointer}
+.msg{font-size:12px;color:#94a3b8;line-height:1.6;margin-top:8px}
+.warn{color:#fbbf24}
+.tech{margin-top:10px;padding:10px;border-radius:10px;background:#111827;font-size:11px;line-height:1.7;color:#cbd5e1}
+.tech b{color:#e2e8f0}
+.prob{display:inline-block;margin-top:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800}
+.prob-hi{background:#14532d;color:#86efac}
+.prob-mid{background:#713f12;color:#fde68a}
+.prob-lo{background:#7f1d1d;color:#fecaca}
+.lev-box{margin-top:8px;padding:8px;border-radius:10px;background:#111827;font-size:12px;line-height:1.6}
+.mini-chart{display:flex;align-items:flex-end;gap:2px;height:42px;margin-top:10px;padding:0 2px}
+.mini-chart i{flex:1;border-radius:2px 2px 0 0;background:#334155;min-width:3px}
+.mini-chart i.up{background:#22c55e}
+.mini-chart i.dn{background:#ef4444}
+.hist-item{border-right:3px solid #65a30d}
+.hist-item.loss{border-right-color:#ef4444}
+.smallbtn{background:#1e293b;border:1px solid #334155;color:#cbd5e1;border-radius:8px;padding:8px 10px;font-size:12px;cursor:pointer}
+.confluence{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.confluence span{font-size:9px;padding:2px 6px;border-radius:6px;background:#1e293b;color:#94a3b8}
+.confluence span.on{background:#14532d;color:#86efac}
+.select-row{display:flex;gap:6px;margin-top:8px;align-items:center}
+.select-row select{flex:1;background:#0f172a;border:1px solid #334155;color:#e2e8f0;border-radius:8px;padding:8px;font-size:12px}
+.trade-btns{display:flex;gap:8px;margin-top:12px}
+.trade-btns button{flex:1;padding:12px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer}
+.btn-buy{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff}
+.btn-sell{background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff}
+.btn-close{background:#334155;color:#e2e8f0;border:1px solid #475569}
+.pos-card{border-right:4px solid #22c55e}
+.pos-card.short{border-right-color:#ef4444}
+.pos-card.closed{opacity:.75;border-right-color:#64748b}
+</style>
+</head>
+<body>
+<header>
+  <div class="row">
+    <div>
+      <h1>Nobitex Hunter <span>GOD</span></h1>
+      <p class="sub" id="st">آماده · چندتایم‌فریم · ATR · اعلان + خرید/فروش</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn-icon" id="nb" onclick="askNotif()">🔔</button>
+      <div class="badge" id="rg">—</div>
+    </div>
+  </div>
+</header>
+
+<div class="scan-wrap">
+  <button class="scan-btn" id="btn" onclick="scan()">
+    <span id="bt">اسکن God Mode</span>
+    <div class="spin hidden" id="sp"></div>
+  </button>
+  <button class="god-btn" id="godBtn" onclick="toggleGod()">⚡ God Mode · خاموش</button>
+  <button class="auto-btn" id="autoBtn" onclick="toggleAuto()">حالت خودکار · خاموش</button>
+  <div class="select-row">
+    <select id="autoInt">
+      <option value="1">هر ۱ دقیقه</option>
+      <option value="5" selected>هر ۵ دقیقه</option>
+      <option value="15">هر ۱۵ دقیقه</option>
+      <option value="30">هر ۳۰ دقیقه</option>
+    </select>
+  </div>
+  <div class="mode">
+    <button class="on" id="m-rls" onclick="setMode('rls')">ریالی</button>
+    <button id="m-usdt" onclick="setMode('usdt')">تتری</button>
+    <button id="m-all" onclick="setMode('all')">همه</button>
+  </div>
+  <div class="mode" style="margin-top:6px">
+    <button class="on" id="t-spot" onclick="setTrade('spot')">اسپات</button>
+    <button id="t-lev" onclick="setTrade('lev')">اهرم</button>
+  </div>
+  <p class="hint" id="hn">نوبیتکس · ATR · اعلان سیگنال جدید · خرید/فروش کاغذی</p>
+</div>
+
+<nav class="tabs">
+  <button class="on" id="t-s" onclick="tab('s')">سیگنال</button>
+  <button id="t-w" onclick="tab('w')">واچ</button>
+  <button id="t-pos" onclick="tab('pos')">پوزیشن</button>
+  <button id="t-h" onclick="tab('h')">تاریخچه</button>
+  <button id="t-p" onclick="tab('p')">آمار</button>
+</nav>
+
+<main class="wrap" style="padding-top:12px">
+  <section id="p-s">
+    <div class="card">
+      <div class="stats">
+        <div><div class="lab">Regime</div><div class="val" id="rt">—</div></div>
+        <div><div class="lab">سیگنال</div><div class="val green" id="sc">0</div></div>
+        <div><div class="lab">واچ</div><div class="val violet" id="wc">0</div></div>
+        <div><div class="lab">God</div><div class="val gold" id="gc">OFF</div></div>
+      </div>
+    </div>
+    <div id="sb"><div class="card empty"><div class="ico">⚡</div><div>سیگنالی نیست</div><div class="msg">God Mode را روشن کن و اسکن بزن</div></div></div>
+  </section>
+  <section id="p-w" class="hidden">
+    <div id="wb"><div class="card empty"><div class="ico">👀</div><div>واچ‌لیست خالی</div></div></div>
+  </section>
+  <section id="p-pos" class="hidden">
+    <div class="card msg">پوزیشن‌های کاغذی (شبیه‌سازی). با دکمه خرید/فروش از سیگنال‌ها باز می‌شوند. برای بستن، قیمت فعلی را وارد کنید.</div>
+    <div id="posb"></div>
+  </section>
+  <section id="p-h" class="hidden">
+    <div class="card msg">سیگنال‌ها با قیمت لحظه صدور ذخیره می‌شوند.</div>
+    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+      <button class="smallbtn" onclick="refreshHistoryPrices()">بروزرسانی قیمت‌ها</button>
+      <button class="smallbtn" onclick="clearHistory()">پاک کردن</button>
+    </div>
+    <div id="hb"></div>
+  </section>
+  <section id="p-p" class="hidden">
+    <div class="card msg">آمار بر اساس تاریخچه و پوزیشن‌ها</div>
+    <div id="pb"></div>
+  </section>
+</main>
+
+<script>
+var S = null;
+try { S = JSON.parse(localStorage.getItem("nh_god_v2") || "null"); } catch(e) { S = null; }
+if (!S) S = { regime:"—", signals:[], watchlist:[], history:[], positions:[], ts:null };
+if (!S.history) S.history = [];
+if (!S.positions) S.positions = [];
+var notif = localStorage.getItem("nh_n") === "1";
+var busy = false;
+var mode = "rls";
+var tradeMode = "spot";
+var autoMode = false;
+var autoTimer = null;
+var godMode = false;
+var lastNotifiedIds = {}; // برای جلوگیری از اعلان تکراری
+
+function save(){ try{ localStorage.setItem("nh_god_v2", JSON.stringify(S)); }catch(e){} }
+function $(id){ return document.getElementById(id); }
+
+function setMode(m){
+  mode=m;
+  ["rls","usdt","all"].forEach(function(x){ $("m-"+x).classList.toggle("on", x===m); });
+}
+function setTrade(t){
+  tradeMode=t;
+  $("t-spot").classList.toggle("on", t==="spot");
+  $("t-lev").classList.toggle("on", t==="lev");
+}
+function tab(n){
+  ["s","w","pos","h","p"].forEach(function(x){
+    var el = $("p-"+x);
+    if(el) el.classList.add("hidden");
+    var tb = $("t-"+x);
+    if(tb) tb.classList.remove("on");
+  });
+  var pel = $("p-"+n);
+  if(pel) pel.classList.remove("hidden");
+  var tbel = $("t-"+n);
+  if(tbel) tbel.classList.add("on");
+  if(n==="h") drawHistory();
+  if(n==="p") drawP();
+  if(n==="pos") drawPositions();
+}
+
+function toggleGod(){
+  godMode = !godMode;
+  var btn = $("godBtn");
+  if(godMode){
+    btn.classList.add("on");
+    btn.textContent = "⚡ God Mode · روشن";
+    $("gc").textContent = "ON";
+    $("st").textContent = "God Mode فعال · اعلان + خرید/فروش";
+  } else {
+    btn.classList.remove("on");
+    btn.textContent = "⚡ God Mode · خاموش";
+    $("gc").textContent = "OFF";
+    $("st").textContent = "آماده · چندتایم‌فریم · ATR · اعلان + خرید/فروش";
+  }
+}
+
+function toggleAuto(){
+  autoMode = !autoMode;
+  var btn = $("autoBtn");
+  if(autoMode){
+    btn.classList.add("on");
+    var mins = parseInt($("autoInt").value)||5;
+    btn.textContent = "خودکار فعال · هر "+mins+" دقیقه";
+    scan();
+    clearInterval(autoTimer);
+    autoTimer = setInterval(function(){ if(!busy) scan(); }, mins*60*1000);
+  } else {
+    btn.classList.remove("on");
+    btn.textContent = "حالت خودکار · خاموش";
+    clearInterval(autoTimer);
+    autoTimer = null;
+  }
+}
+
+async function askNotif(){
+  if(!("Notification" in window)) return alert("مرورگر شما نوتیفیکیشن را پشتیبانی نمی‌کند");
+  var p=await Notification.requestPermission();
+  notif=p==="granted";
+  localStorage.setItem("nh_n", notif?"1":"0");
+  $("nb").textContent=notif?"🔔 فعال":"🔔";
+  if(notif){
+    try{ new Notification("Nobitex Hunter God",{body:"اعلان سیگنال جدید فعال شد ✓", icon:"https://nobitex.ir/favicon.ico"}); }catch(e){}
+  } else {
+    alert("برای دریافت اعلان، اجازه نوتیفیکیشن را بدهید");
+  }
+}
+
+function alarm(title, body, force){
+  try{ if(navigator.vibrate) navigator.vibrate([200,80,200,80,200]); }catch(e){}
+  try{
+    var c=new (window.AudioContext||window.webkitAudioContext)();
+    var o=c.createOscillator(),g=c.createGain();
+    o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.value=0.09;
+    o.start();setTimeout(function(){o.stop();},180);
+  }catch(e){}
+  if((notif||force) && Notification.permission==="granted"){
+    try{
+      new Notification(title,{
+        body: body,
+        icon: "https://nobitex.ir/favicon.ico",
+        badge: "https://nobitex.ir/favicon.ico",
+        tag: "nh-signal-" + Date.now(),
+        requireInteraction: true
+      });
+    }catch(e){}
+  }
+}
+
+function timeoutFetch(url,ms,opts){
+  return new Promise(function(resolve,reject){
+    var ctrl=typeof AbortController!=="undefined"?new AbortController():null;
+    var t=setTimeout(function(){ if(ctrl)try{ctrl.abort();}catch(e){}; reject(new Error("TIMEOUT")); }, ms||14000);
+    var o=opts||{method:"GET"};
+    if(ctrl) o.signal=ctrl.signal;
+    fetch(url,o).then(function(r){clearTimeout(t);resolve(r);}).catch(function(e){clearTimeout(t);reject(e);});
+  });
+}
+var PROXIES=[
+  function(u){return "https://api.allorigins.win/raw?url="+encodeURIComponent(u);},
+  function(u){return "https://corsproxy.io/?"+encodeURIComponent(u);}
+];
+async function fetchJSON(url){
+  try{
+    var res=await timeoutFetch(url,12000);
+    if(res&&res.ok){ return {ok:true,data:await res.json(),via:"direct"}; }
+  }catch(e){}
+  for(var i=0;i<PROXIES.length;i++){
+    try{
+      var res2=await timeoutFetch(PROXIES[i](url),16000);
+      if(!res2||!res2.ok) continue;
+      var text=await res2.text();
+      var data2=JSON.parse(text);
+      if(data2&&data2.contents){ try{ data2=JSON.parse(data2.contents);}catch(e){} }
+      return {ok:true,data:data2,via:"proxy"+i};
+    }catch(e){}
+  }
+  return {ok:false,error:"FETCH_FAIL"};
+}
+
+function buildStatsUrls(){
+  var base=["https://apiv2.nobitex.ir/market/stats","https://api.nobitex.ir/market/stats"];
+  var qs= mode==="rls"?"?dstCurrency=rls":(mode==="usdt"?"?dstCurrency=usdt":"");
+  return base.map(function(b){return b+qs;});
+}
+
+function parseStats(data){
+  if(!data) return [];
+  var stats=data.stats||data;
+  if(!stats||typeof stats!=="object") return [];
+  var out=[];
+  Object.keys(stats).forEach(function(key){
+    var row=stats[key];
+    if(!row||typeof row!=="object"||row.isClosed===true) return;
+    var parts=key.split("-");
+    var src=(parts[0]||"").toUpperCase();
+    var dst=(parts[1]||"").toUpperCase();
+    if(!src) return;
+    if(dst==="RLS") dst="IRT";
+    var price=Number(row.latest||row.dayClose||0);
+    var vol=Number(row.volumeDst||0);
+    var ch=Number(row.dayChange||0);
+    var bestBuy=Number(row.bestBuy||0);
+    var bestSell=Number(row.bestSell||0);
+    if(price<=0) return;
+    if(dst==="IRT"&&vol<3e7) return;
+    if(dst==="USDT"&&vol<300) return;
+    out.push({
+      symbol:src+"/"+dst,
+      key:key,
+      src:src.toLowerCase(),
+      dst:dst==="IRT"?"rls":dst.toLowerCase(),
+      price:price, volume:vol, ch:ch, bestBuy:bestBuy, bestSell:bestSell
+    });
+  });
+  return out;
+}
+
+async function fetchOHLC(marketKey, resolution){
+  var parts=marketKey.split("-");
+  var src=(parts[0]||"").toUpperCase();
+  var dst=(parts[1]||"").toUpperCase();
+  if(dst==="RLS") dst="IRT";
+  var symbol=src+dst;
+  var to=Math.floor(Date.now()/1000);
+  var hours = resolution===15 ? 24 : (resolution===240 ? 10*24 : 48);
+  var from=to - 60*60*hours;
+  var urls=[
+    "https://apiv2.nobitex.ir/market/udf/history?symbol="+symbol+"&resolution="+resolution+"&from="+from+"&to="+to,
+    "https://api.nobitex.ir/market/udf/history?symbol="+symbol+"&resolution="+resolution+"&from="+from+"&to="+to
+  ];
+  for(var i=0;i<urls.length;i++){
+    var r=await fetchJSON(urls[i]);
+    if(!r.ok||!r.data) continue;
+    var d=r.data;
+    if(d.s==="ok"&&Array.isArray(d.c)&&d.c.length>=15){
+      return {
+        c:d.c.map(Number), o:d.o.map(Number), h:d.h.map(Number), l:d.l.map(Number),
+        v:(d.v||[]).map(Number), res:resolution
+      };
+    }
+  }
+  return null;
+}
+
+function ema(arr,n){
+  if(arr.length<n) return null;
+  var k=2/(n+1);
+  var e=arr[0];
+  for(var i=1;i<arr.length;i++) e=arr[i]*k + e*(1-k);
+  return e;
+}
+function sma(arr,n){
+  if(arr.length<n) return null;
+  var s=0; for(var i=arr.length-n;i<arr.length;i++) s+=arr[i];
+  return s/n;
+}
+function rsi(closes,period){
+  period=period||14;
+  if(closes.length<period+1) return null;
+  var gains=0,losses=0;
+  for(var i=closes.length-period;i<closes.length;i++){
+    var d=closes[i]-closes[i-1];
+    if(d>=0) gains+=d; else losses-=d;
+  }
+  if(losses===0) return 100;
+  var rs=gains/losses;
+  return 100-100/(1+rs);
+}
+function atr(h,l,c,period){
+  period=period||14;
+  if(h.length<period+1) return null;
+  var trs=[];
+  for(var i=1;i<h.length;i++){
+    var tr=Math.max(h[i]-l[i], Math.abs(h[i]-c[i-1]), Math.abs(l[i]-c[i-1]));
+    trs.push(tr);
+  }
+  if(trs.length<period) return null;
+  var s=0; for(var j=trs.length-period;j<trs.length;j++) s+=trs[j];
+  return s/period;
+}
+function macd(closes){
+  if(closes.length<35) return null;
+  var ema12=ema(closes,12), ema26=ema(closes,26);
+  if(ema12==null||ema26==null) return null;
+  var line=ema12-ema26;
+  return {line:line, hist:line, bull:line>0};
+}
+function bollinger(closes,n,k){
+  n=n||20; k=k||2;
+  if(closes.length<n) return null;
+  var mid=sma(closes,n);
+  var sum=0;
+  for(var i=closes.length-n;i<closes.length;i++) sum+=Math.pow(closes[i]-mid,2);
+  var std=Math.sqrt(sum/n);
+  return {mid:mid, upper:mid+k*std, lower:mid-k*std, width:(2*k*std)/mid*100};
+}
+function stoch(h,l,c,period){
+  period=period||14;
+  if(h.length<period) return null;
+  var hh=-Infinity, ll=Infinity;
+  for(var i=h.length-period;i<h.length;i++){
+    if(h[i]>hh) hh=h[i];
+    if(l[i]<ll) ll=l[i];
+  }
+  if(hh===ll) return 50;
+  return ((c[c.length-1]-ll)/(hh-ll))*100;
+}
+
+function detectPatterns(o,h,l,c){
+  var notes=[];
+  var n=c.length;
+  if(n<3) return notes;
+  var body=Math.abs(c[n-1]-o[n-1]);
+  var range=h[n-1]-l[n-1];
+  var upper=h[n-1]-Math.max(c[n-1],o[n-1]);
+  var lower=Math.min(c[n-1],o[n-1])-l[n-1];
+  if(lower>body*2 && upper<body*0.5 && body/range<0.35) notes.push("Pinbar/Hammer");
+  var prevBody=Math.abs(c[n-2]-o[n-2]);
+  if(c[n-1]>o[n-1] && c[n-2]<o[n-2] && c[n-1]>o[n-2] && o[n-1]<c[n-2] && body>prevBody*1.1) notes.push("Bull Engulfing");
+  if(c[n-1]<o[n-1] && c[n-2]>o[n-2] && c[n-1]<o[n-2] && o[n-1]>c[n-2] && body>prevBody*1.1) notes.push("Bear Engulfing");
+  if(body/range<0.1 && range>0) notes.push("Doji");
+  return notes;
+}
+
+function analyzeTF(ohlc){
+  if(!ohlc||!ohlc.c||ohlc.c.length<20){
+    return {ok:false, scoreAdd:0, notes:[], conf:[]};
+  }
+  var c=ohlc.c, o=ohlc.o, h=ohlc.h, l=ohlc.l, v=ohlc.v||[];
+  var notes=[], conf=[], scoreAdd=0;
+  var last=c[c.length-1];
+
+  var ema9=ema(c,9), ema21=ema(c,21), ema50=ema(c,50);
+  var r=rsi(c,14);
+  var a=atr(h,l,c,14);
+  var m=macd(c);
+  var bb=bollinger(c,20,2);
+  var st=stoch(h,l,c,14);
+  var patterns=detectPatterns(o,h,l,c);
+
+  if(ema9!=null&&ema21!=null){
+    if(ema9>ema21&&last>ema9){ notes.push("روند صعودی (EMA)"); scoreAdd+=10; conf.push("EMA↑"); }
+    else if(ema9<ema21&&last<ema9){ notes.push("روند نزولی (EMA)"); scoreAdd+=3; conf.push("EMA↓"); }
+  }
+  if(ema50!=null&&last>ema50){ scoreAdd+=4; conf.push("بالای EMA50"); }
+
+  if(r!=null){
+    notes.push("RSI≈"+r.toFixed(0));
+    if(r>45&&r<65){ scoreAdd+=8; conf.push("RSI خوب"); }
+    else if(r>=70){ scoreAdd-=12; conf.push("اشباع خرید"); }
+    else if(r<=30){ scoreAdd+=5; conf.push("اشباع فروش"); }
+  }
+
+  if(m&&m.bull){ scoreAdd+=6; conf.push("MACD+"); notes.push("MACD مثبت"); }
+  else if(m&&!m.bull){ scoreAdd-=2; }
+
+  if(bb){
+    if(last<bb.lower*1.01){ scoreAdd+=5; conf.push("نزدیک کف BB"); notes.push("نزدیک باند پایین"); }
+    if(last>bb.upper*0.99){ scoreAdd-=6; conf.push("نزدیک سقف BB"); }
+    if(bb.width<4){ notes.push("فشردگی BB · احتمال انفجار"); scoreAdd+=4; }
+  }
+
+  if(st!=null){
+    if(st>20&&st<80) scoreAdd+=3;
+    if(st<20){ scoreAdd+=4; conf.push("Stoch اشباع"); }
+  }
+
+  if(v.length>10){
+    var avgV=0; for(var i=v.length-10;i<v.length-1;i++) avgV+=v[i]; avgV/=9;
+    if(v[v.length-1]>avgV*1.8){ scoreAdd+=6; conf.push("حجم اسپایک"); notes.push("حجم بالا"); }
+  }
+
+  patterns.forEach(function(p){ notes.push(p); scoreAdd+=5; conf.push(p); });
+
+  var lows=l.slice(-8), highs=h.slice(-8);
+  if(lows[lows.length-1]>lows[0]){ scoreAdd+=5; conf.push("HL"); notes.push("کف بالاتر"); }
+  if(highs[highs.length-1]<highs[0]){ scoreAdd+=2; notes.push("سقف پایین‌تر"); }
+
+  var bars=[];
+  var slice=c.slice(-16);
+  var min=Math.min.apply(null,slice), max=Math.max.apply(null,slice);
+  for(var i=0;i<slice.length;i++){
+    var pct=max===min?50:((slice[i]-min)/(max-min))*100;
+    bars.push({h:Math.max(8,pct), up:i===0?true:slice[i]>=slice[i-1]});
+  }
+
+  return {
+    ok:true, scoreAdd:scoreAdd, notes:notes, conf:conf,
+    rsi:r, atr:a, ema9:ema9, ema21:ema21, bb:bb, bars:bars, last:last
+  };
+}
+
+function baseScore(s){
+  var score=28;
+  if(s.ch>1.5&&s.ch<9) score+=18;
+  if(s.ch>=0&&s.ch<=3) score+=8;
+  if(s.volume>0) score+=6;
+  if(s.ch>14) score-=22;
+  if(s.ch<-7) score-=10;
+  if(s.bestBuy>0&&s.bestSell>0){
+    var mid=(s.bestBuy+s.bestSell)/2;
+    var spread=(s.bestSell-s.bestBuy)/mid;
+    if(spread<0.008) score+=6;
+    if(spread>0.035) score-=8;
+  }
+  return score;
+}
+
+function classify(score,ch,th){
+  if(godMode){
+    if(score>=th+8&&ch>2&&ch<11) return "GOD_SIGNAL";
+    if(score>=th&&ch>1.5&&ch<10) return "EARLY_BREAKOUT";
+    if(score>=th-5&&ch>=0&&ch<=4) return "PRE_MOVE";
+    if(score>=62) return "WATCHLIST";
+    return "WAIT";
+  }
+  if(score>=th&&ch>3&&ch<10) return "EARLY_BREAKOUT";
+  if(score>=th-6&&ch>=0&&ch<=4) return "PRE_MOVE";
+  if(score>=58) return "WATCHLIST";
+  return "WAIT";
+}
+
+function successProb(item){
+  var p=38;
+  p+=(item.score-60)*0.95;
+  if(item.tech&&item.tech.ok) p+=item.tech.scoreAdd*0.55;
+  if(item.levels&&item.levels.rr2>=2.8) p+=8;
+  if(item.levels&&item.levels.rr2<1.9) p-=10;
+  if(Math.abs(item.ch)>13) p-=14;
+  if(item.rsi!=null){
+    if(item.rsi>72) p-=12;
+    if(item.rsi>48&&item.rsi<62) p+=6;
+  }
+  if(godMode&&item.confluence&&item.confluence.length>=4) p+=7;
+  p=Math.max(15, Math.min(88, Math.round(p)));
+  return p;
+}
+
+function leverageDecision(item){
+  var dir="WAIT";
+  if(item.classification==="GOD_SIGNAL"||item.classification==="EARLY_BREAKOUT"||item.classification==="PRE_MOVE") dir="LONG";
+  else if(item.ch<=-3&&item.score>=60) dir="SHORT";
+  else if(item.ch>=1.2&&item.score>=62) dir="LONG";
+  else if(item.ch<=-1.5&&item.score>=62) dir="SHORT";
+
+  var lev=1, absCh=Math.abs(item.ch||0), sc=item.score||0;
+  if(dir==="WAIT") return {dir:dir,lev:1,note:"سیگنال اهرمی نیست",riskIfStop:null};
+  if(sc>=90&&absCh>=1.5&&absCh<=8) lev=5;
+  else if(sc>=82&&absCh>=1.2&&absCh<=10) lev=3;
+  else if(sc>=72) lev=2;
+  else lev=1;
+  if(absCh>12) lev=Math.min(lev,2);
+  if(absCh>17) lev=1;
+  if((item.levels&&item.levels.rr2||0)<2.2) lev=Math.min(lev,2);
+  var stopPct=item.levels?Math.abs((item.levels.entry-item.levels.stop)/item.levels.entry):0.05;
+  return {
+    dir:dir, lev:lev,
+    note:(dir==="LONG"?"سناریوی صعودی":"سناریوی نزولی")+" · اهرم x"+lev,
+    riskIfStop:+(stopPct*lev*100).toFixed(1)
+  };
+}
+
+function fmt(n){
+  n=Number(n);
+  if(!isFinite(n)) return "—";
+  if(n>=1000) return Math.round(n).toLocaleString("fa-IR");
+  if(n>=1) return n.toLocaleString("fa-IR",{maximumFractionDigits:4});
+  return Number(n).toPrecision(4);
+}
+
+// ========== خرید / فروش کاغذی ==========
+function openPosition(signalId, side){
+  var sig = null;
+  S.signals.concat(S.watchlist).forEach(function(s){ if(s.id===signalId) sig=s; });
+  if(!sig){ alert("سیگنال پیدا نشد"); return; }
+
+  var already = S.positions.some(function(p){ return p.symbol===sig.symbol && !p.closed; });
+  if(already){
+    if(!confirm("برای این نماد پوزیشن باز دارید. باز هم باز کنیم؟")) return;
+  }
+
+  var pos = {
+    id: "pos_" + Date.now() + "_" + Math.random().toString(36).slice(2,6),
+    symbol: sig.symbol,
+    key: sig.key,
+    side: side, // LONG or SHORT
+    entry: sig.price,
+    currentPrice: sig.price,
+    stop: sig.levels ? sig.levels.stop : sig.price * 0.94,
+    t1: sig.levels ? sig.levels.t1 : sig.price * 1.08,
+    t2: sig.levels ? sig.levels.t2 : sig.price * 1.16,
+    score: sig.score,
+    leverage: sig.leverage || 1,
+    openTime: new Date().toISOString(),
+    openTimeFa: new Date().toLocaleString("fa-IR"),
+    closed: false,
+    closePrice: null,
+    closeTime: null,
+    pnlPct: 0
+  };
+  S.positions.unshift(pos);
+  S.positions = S.positions.slice(0,40);
+  save();
+  alarm("✅ پوزیشن باز شد", side + " · " + sig.symbol + " @ " + fmt(sig.price));
+  drawPositions();
+  tab("pos");
+}
+
+function closePosition(posId, forcedPrice, reason){
+  var price = forcedPrice;
+  if(price == null){
+    var el = document.getElementById("close_price_" + posId);
+    price = el ? parseFloat(el.value) : null;
+  }
+  if(!price || price<=0){
+    alert("قیمت بستن را وارد کنید");
+    return;
+  }
+  for(var i=0;i<S.positions.length;i++){
+    if(S.positions[i].id===posId && !S.positions[i].closed){
+      var p = S.positions[i];
+      p.closed = true;
+      p.closePrice = price;
+      p.closeTime = new Date().toISOString();
+      p.closeReason = reason || "دستی";
+      if(p.side==="LONG"){
+        p.pnlPct = +(((price - p.entry)/p.entry)*100).toFixed(2);
+      } else {
+        p.pnlPct = +(((p.entry - price)/p.entry)*100).toFixed(2);
+      }
+      // اعمال اهرم تقریبی
+      p.pnlPct = +(p.pnlPct * (p.leverage||1)).toFixed(2);
+      break;
+    }
+  }
+  save();
+  drawPositions();
+  drawP();
+  var closed = S.positions.find(function(x){return x.id===posId;}) || {};
+  var reasonText = reason ? (" (" + reason + ")") : "";
+  alarm("پوزیشن بسته شد" + reasonText, closed.symbol + " · PnL: " + (closed.pnlPct||0) + "%");
+}
+
+// بررسی خودکار استاپ و تیک‌پروفیت
+function checkAutoClose(priceMap){
+  if(!priceMap || !S.positions) return;
+  var closedAny = false;
+  S.positions.forEach(function(p){
+    if(p.closed) return;
+    var current = priceMap[p.key];
+    if(!current || current <= 0) return;
+
+    p.currentPrice = current; // آپدیت قیمت فعلی
+
+    var hitStop = false, hitTP = false;
+
+    if(p.side === "LONG"){
+      if(current <= p.stop) hitStop = true;
+      else if(current >= p.t2) hitTP = true;   // TP اصلی = t2
+    } else if(p.side === "SHORT"){
+      if(current >= p.stop) hitStop = true;
+      else if(current <= p.t2) hitTP = true;
+    }
+
+    if(hitStop){
+      closePosition(p.id, current, "استاپ‌لاست");
+      closedAny = true;
+    } else if(hitTP){
+      closePosition(p.id, current, "تیک‌پرافیت");
+      closedAny = true;
+    }
+  });
+  if(closedAny){
+    save();
+    drawPositions();
+    drawP();
+  }
+}
+
+function openNobitex(symbol){
+  // باز کردن صفحه نوبیتکس (تقریبی)
+  var parts = symbol.split("/");
+  var src = (parts[0]||"").toLowerCase();
+  var dst = (parts[1]||"").toLowerCase();
+  if(dst==="irt") dst="rls";
+  var url = "https://nobitex.ir/trade/" + src + "-" + dst;
+  window.open(url, "_blank");
+}
+
+async function scan(){
+  if(busy) return;
+  busy=true;
+  var btn=$("btn"),bt=$("bt"),sp=$("sp"),st=$("st"),hn=$("hn");
+  btn.disabled=true; bt.textContent="دریافت بازار..."; sp.classList.remove("hidden");
+  st.textContent=autoMode?"اسکن خودکار...":(godMode?"God Mode در حال اسکن...":"اتصال به نوبیتکس...");
+
+  var pack=null,lastErr="";
+  var urls=buildStatsUrls();
+  for(var i=0;i<urls.length&&!pack;i++){
+    var r=await fetchJSON(urls[i]);
+    if(!r.ok){ lastErr=r.error||"fail"; continue; }
+    var list=parseStats(r.data);
+    if(list.length<5){ lastErr="LIST_SMALL"; continue; }
+    pack={list:list,via:r.via};
+  }
+  if(!pack){
+    st.textContent="اتصال برقرار نشد"; hn.textContent=lastErr;
+    bt.textContent="تلاش دوباره"; sp.classList.add("hidden"); btn.disabled=false; busy=false;
+    $("sb").innerHTML='<div class="card empty"><div class="ico">⚠️</div><div class="warn">داده نوبیتکس نیامد</div></div>';
+    return;
+  }
+
+  var avg=0; pack.list.forEach(function(x){avg+=x.ch;}); avg/=pack.list.length;
+  var regime=avg<=-2.5?"BEARISH":avg<=-0.8?"WEAK":avg>=1.5?"BULLISH":"NEUTRAL";
+  var th={BULLISH:godMode?72:68, NEUTRAL:godMode?78:74, WEAK:godMode?84:80, BEARISH:godMode?90:86}[regime]||74;
+
+  var prelim=[];
+  pack.list.forEach(function(s){
+    var score=baseScore(s);
+    if(score<52) return;
+    var entry=s.price;
+    var stop=entry*0.94, t1=entry*1.08, t2=entry*1.16;
+    var risk=entry-stop, rr2=risk>0?+((t2-entry)/risk).toFixed(2):0;
+    if(rr2<1.6) return;
+    prelim.push({
+      id:s.symbol+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,5),
+      symbol:s.symbol, key:s.key, price:entry, ch:s.ch, volume:s.volume,
+      score:Math.min(88,score), classification:"WAIT",
+      levels:{entry:entry,stop:stop,t1:t1,t2:t2,rr2:rr2},
+      signalTime:new Date().toISOString(),
+      signalTimeFa:new Date().toLocaleString("fa-IR"),
+      currentPrice:entry
+    });
+  });
+  prelim.sort(function(a,b){return b.score-a.score;});
+  prelim=prelim.slice(0, godMode ? 10 : 12);
+
+  st.textContent="تحلیل تکنیکال پیشرفته...";
+  bt.textContent="چندتایم‌فریم...";
+  var enriched=[];
+  for(var j=0;j<prelim.length;j++){
+    var item=prelim[j];
+    st.textContent="چارت "+(j+1)+"/"+prelim.length+" · "+item.symbol;
+    
+    var ohlc60=await fetchOHLC(item.key, 60);
+    var tech60=analyzeTF(ohlc60);
+    
+    var tech15=null, tech240=null;
+    if(godMode){
+      tech15=await fetchOHLC(item.key, 15).then(analyzeTF);
+      tech240=await fetchOHLC(item.key, 240).then(analyzeTF);
+    }
+
+    var totalAdd = (tech60.scoreAdd||0);
+    var allNotes = (tech60.notes||[]).slice();
+    var allConf = (tech60.conf||[]).slice();
+    
+    if(tech15&&tech15.ok){
+      totalAdd += tech15.scoreAdd*0.6;
+      allNotes = allNotes.concat(tech15.notes.map(function(n){return "15m: "+n;}));
+      allConf = allConf.concat(tech15.conf);
+    }
+    if(tech240&&tech240.ok){
+      totalAdd += tech240.scoreAdd*0.8;
+      allNotes = allNotes.concat(tech240.notes.map(function(n){return "4H: "+n;}));
+      allConf = allConf.concat(tech240.conf);
+    }
+
+    item.tech = tech60;
+    item.tech.notes = allNotes;
+    item.confluence = [...new Set(allConf)];
+    item.score = Math.min(98, Math.max(0, Math.round(item.score + totalAdd)));
+    item.rsi = tech60.rsi;
+    item.atr = tech60.atr;
+
+    if(item.atr && item.atr>0){
+      var atrMult = godMode ? 1.8 : 2.2;
+      item.levels.stop = item.price - item.atr * atrMult;
+      item.levels.t1 = item.price + item.atr * 2.5;
+      item.levels.t2 = item.price + item.atr * 4.2;
+      var risk = item.price - item.levels.stop;
+      item.levels.rr2 = risk>0 ? +((item.levels.t2 - item.price)/risk).toFixed(2) : 0;
+    }
+
+    item.classification = classify(item.score, item.ch, th);
+    item.prob = successProb(item);
+    var L = leverageDecision(item);
+    item.side=L.dir; item.leverage=L.lev; item.levNote=L.note; item.riskIfStop=L.riskIfStop;
+
+    if(item.classification!=="WAIT") enriched.push(item);
+  }
+
+  enriched.sort(function(a,b){return b.score-a.score;});
+  
+  var minScore = godMode ? th : th-2;
+  var signals = enriched.filter(function(s){
+    return ["GOD_SIGNAL","PRE_MOVE","EARLY_BREAKOUT"].indexOf(s.classification)>=0 && s.score>=minScore;
+  }).slice(0, godMode?5:6);
+  
+  var watchlist = enriched.filter(function(s){
+    if(signals.some(function(x){return x.symbol===s.symbol;})) return false;
+    return s.classification==="WATCHLIST"||s.score>=60;
+  }).slice(0,8);
+
+  if(tradeMode==="lev"){
+    signals=signals.filter(function(x){return x.side==="LONG"||x.side==="SHORT";});
+    watchlist=watchlist.filter(function(x){return x.side==="LONG"||x.side==="SHORT";});
+  }
+
+  // اعلان برای سیگنال‌های جدید قوی
+  var newStrong = [];
+  signals.forEach(function(s){
+    if(!lastNotifiedIds[s.symbol] || (Date.now() - lastNotifiedIds[s.symbol] > 30*60*1000)){
+      newStrong.push(s);
+      lastNotifiedIds[s.symbol] = Date.now();
+    }
+  });
+  if(newStrong.length){
+    var names = newStrong.map(function(s){return s.symbol + " ("+s.score+")";}).join(" · ");
+    alarm("🚀 سیگنال جدید پیدا شد!", newStrong.length + " سیگنال: " + names);
+  }
+
+  var now=Date.now();
+  signals.forEach(function(s){
+    var exists=S.history.some(function(h){
+      return h.symbol===s.symbol && (now-new Date(h.signalTime).getTime())<90*60*1000;
+    });
+    if(!exists){
+      S.history.unshift({
+        id:s.id, symbol:s.symbol, key:s.key, entry:s.price, currentPrice:s.price,
+        stop:s.levels.stop, t1:s.levels.t1, t2:s.levels.t2, score:s.score, prob:s.prob,
+        side:s.side, leverage:s.leverage, classification:s.classification,
+        signalTime:s.signalTime, signalTimeFa:s.signalTimeFa,
+        techNotes:(s.tech&&s.tech.notes)||[], confluence:s.confluence||[]
+      });
+    }
+  });
+  S.history=S.history.slice(0,60);
+
+  // ========== بررسی خودکار استاپ و تیک‌پرافیت ==========
+  var priceMap = {};
+  pack.list.forEach(function(item){
+    if(item.key && item.price) priceMap[item.key] = item.price;
+  });
+  checkAutoClose(priceMap);
+
+  S.regime=regime; S.signals=signals; S.watchlist=watchlist; S.ts=new Date().toISOString();
+  save();
+
+  st.textContent=(autoMode?"خودکار · ":"")+(godMode?"God · ":"")+"کامل · "+signals.length+" سیگنال";
+  hn.textContent="ذخیره شد · "+new Date().toLocaleTimeString("fa-IR");
+  bt.textContent="اسکن مجدد"; sp.classList.add("hidden"); btn.disabled=false; busy=false;
+  draw();
+  drawPositions();
+  tab("s");
+}
+
+function pnlOf(entry,current){
+  var pct=entry?((current-entry)/entry)*100:0;
+  return {pct:+pct.toFixed(2), ok:pct>=0};
+}
+
+function spark(bars){
+  if(!bars||!bars.length) return "";
+  var h="";
+  for(var i=0;i<bars.length;i++){
+    h+='<i class="'+(bars[i].up?"up":"dn")+'" style="height:'+bars[i].h+'%"></i>';
+  }
+  return '<div class="mini-chart">'+h+'</div>';
+}
+
+function cardHTML(s){
+  var tagMap={PRE_MOVE:"b-pre",EARLY_BREAKOUT:"b-early",GOD_SIGNAL:"b-god",WATCHLIST:"b-watch"};
+  var tag=tagMap[s.classification]||"b-watch";
+  var sc=s.score>=90?"gold":s.score>=80?"green":s.score>=68?"amber":"red";
+  var p=pnlOf(s.price,s.currentPrice||s.price);
+  var pc=p.ok?"green":"red";
+  var ch=(s.ch!=null&&!isNaN(s.ch))?((s.ch>0?"+":"")+Number(s.ch).toFixed(1)+"%"):"";
+  var prob=s.prob!=null?s.prob:successProb(s);
+  var pcls=prob>=68?"prob-hi":prob>=52?"prob-mid":"prob-lo";
+  
+  var confHtml="";
+  if(s.confluence&&s.confluence.length){
+    confHtml='<div class="confluence">'+s.confluence.slice(0,8).map(function(c){return '<span class="on">'+c+'</span>';}).join("")+'</div>';
+  }
+
+  var html='<div class="card"><div class="row2"><div><div style="font-weight:700;font-size:16px">'+s.symbol+'</div>'+
+    '<div style="font-size:11px;color:#94a3b8">'+(s.signalTimeFa||"")+'</div></div>'+
+    '<div style="text-align:left"><span class="tag '+tag+'">'+String(s.classification).replace("_"," ")+'</span>'+
+    '<div class="score '+sc+'">'+s.score+'</div></div></div>'+
+    '<div class="grid4">'+
+    '<div><div class="l">Entry</div><div style="font-weight:600">'+fmt(s.levels.entry)+'</div></div>'+
+    '<div><div class="l">Stop (ATR)</div><div class="red" style="font-weight:600">'+fmt(s.levels.stop)+'</div></div>'+
+    '<div><div class="l">T2</div><div class="green" style="font-weight:600">'+fmt(s.levels.t2)+'</div></div>'+
+    '<div><div class="l">R/R</div><div style="font-weight:600">'+s.levels.rr2+'</div></div></div>'+
+    spark(s.tech&&s.tech.bars)+
+    confHtml+
+    '<div style="margin-top:6px"><span class="prob '+pcls+'">احتمال تقریبی: '+prob+'%</span></div>'+
+    '<div class="tech"><b>تحلیل:</b><br>'+((s.tech&&s.tech.notes&&s.tech.notes.length)?s.tech.notes.slice(0,7).map(function(n){return "• "+n;}).join("<br>"):"داده محدود")+
+    '<div style="margin-top:6px;color:#64748b;font-size:10px">احتمال تخمینی و آموزشی است · نه تضمین</div></div>'+
+    '<div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11px">'+
+    '<span style="color:#64748b">'+ch+'</span><span class="'+pc+'" style="font-weight:700">'+(p.pct>0?"+":"")+p.pct+'%</span></div>';
+
+  if(s.side&&s.side!=="WAIT"){
+    var sideCls=s.side==="LONG"?"b-long":"b-short";
+    html+='<div class="lev-box"><span class="tag '+sideCls+'">'+s.side+'</span> <b>اهرم x'+(s.leverage||1)+'</b><br>'+(s.levNote||"")+
+      (s.riskIfStop!=null?'<br>ریسک استاپ ≈ <span class="red"><b>'+s.riskIfStop+'%</b></span>':'')+'</div>';
+  }
+
+  // دکمه‌های خرید و فروش
+  html += '<div class="trade-btns">';
+  html += '<button class="btn-buy" onclick="openPosition(\''+s.id+'\',\'LONG\')">🟢 خرید (Buy)</button>';
+  html += '<button class="btn-sell" onclick="openPosition(\''+s.id+'\',\'SHORT\')">🔴 فروش (Sell)</button>';
+  html += '</div>';
+  html += '<div style="margin-top:8px;text-align:center"><button class="smallbtn" onclick="openNobitex(\''+s.symbol+'\')">باز کردن در نوبیتکس</button></div>';
+
+  html+='</div>';
+  return html;
+}
+
+function draw(){
+  $("sc").textContent=S.signals.length;
+  $("wc").textContent=S.watchlist.length;
+  $("rt").textContent=S.regime||"—";
+  $("rg").textContent=S.regime||"—";
+  $("sb").innerHTML=S.signals.length?S.signals.map(cardHTML).join(""):
+    '<div class="card empty"><div class="ico">⚡</div><div>سیگنالی نیست</div></div>';
+  $("wb").innerHTML=S.watchlist.length?S.watchlist.map(cardHTML).join(""):
+    '<div class="card empty"><div class="ico">👀</div><div>واچ‌لیست خالی</div></div>';
+}
+
+function drawPositions(){
+  var b=$("posb");
+  if(!S.positions.length){
+    b.innerHTML='<div class="card empty"><div class="ico">📈</div><div>پوزیشنی باز نیست</div><div class="msg">از تب سیگنال دکمه خرید یا فروش را بزنید</div></div>';
+    return;
+  }
+  var html="";
+  S.positions.forEach(function(p){
+    var cls = "pos-card" + (p.side==="SHORT"?" short":"") + (p.closed?" closed":"");
+    
+    // محاسبه درصد سود/ضرر
+    var livePct = 0;
+    if(p.closed){
+      livePct = p.pnlPct || 0;
+    } else {
+      var cur = p.currentPrice || p.entry;
+      if(p.side === "LONG"){
+        livePct = ((cur - p.entry) / p.entry) * 100;
+      } else {
+        livePct = ((p.entry - cur) / p.entry) * 100;
+      }
+      livePct = +(livePct * (p.leverage || 1)).toFixed(2);
+    }
+    var pnlClass = livePct >= 0 ? "green" : "red";
+    var pnlSign = livePct > 0 ? "+" : "";
+
+    html += '<div class="card '+cls+'">';
+    html += '<div class="row2"><div><div style="font-weight:700;font-size:16px">'+p.symbol+'</div>';
+    html += '<div style="font-size:11px;color:#94a3b8">'+p.openTimeFa+' · '+(p.closed?"بسته شده":"باز")+'</div></div>';
+    html += '<div style="text-align:left"><span class="tag '+(p.side==="LONG"?"b-long":"b-short")+'">'+p.side+'</span>';
+    html += '<div class="score '+pnlClass+'">'+pnlSign+livePct+'%</div>';
+    html += '</div></div>';
+
+    html += '<div class="grid3" style="margin-top:10px">';
+    html += '<div><div style="color:#64748b;font-size:10px">ورود</div><div style="font-weight:600">'+fmt(p.entry)+'</div></div>';
+    html += '<div><div style="color:#64748b;font-size:10px">استاپ</div><div class="red" style="font-weight:600">'+fmt(p.stop)+'</div></div>';
+    html += '<div><div style="color:#64748b;font-size:10px">هدف</div><div class="green" style="font-weight:600">'+fmt(p.t2)+'</div></div>';
+    html += '</div>';
+
+    // نمایش قیمت فعلی و درصد
+    if(!p.closed){
+      html += '<div style="margin-top:10px;padding:8px;background:#111827;border-radius:8px;text-align:center">';
+      html += '<div style="font-size:12px;color:#94a3b8">قیمت فعلی: <b style="color:#e2e8f0">'+fmt(p.currentPrice||p.entry)+'</b></div>';
+      html += '<div style="font-size:18px;font-weight:800;margin-top:4px" class="'+pnlClass+'">'+pnlSign+livePct+'% <span style="font-size:11px;font-weight:600">(با اهرم x'+(p.leverage||1)+')</span></div>';
+      html += '</div>';
+
+      html += '<div class="flex" style="margin-top:12px">';
+      html += '<input type="number" id="close_price_'+p.id+'" placeholder="قیمت بستن" />';
+      html += '<button class="btn-close" onclick="closePosition(\''+p.id+'\')">بستن پوزیشن</button>';
+      html += '</div>';
+      html += '<div style="margin-top:8px;text-align:center"><button class="smallbtn" onclick="openNobitex(\''+p.symbol+'\')">نوبیتکس</button></div>';
+      html += '<div style="margin-top:6px;font-size:11px;color:#64748b;text-align:center">بسته شدن خودکار استاپ / تی‌پی فعال است</div>';
+    } else {
+      var reasonText = p.closeReason ? (' · ' + p.closeReason) : '';
+      html += '<div style="margin-top:10px;padding:8px;background:#111827;border-radius:8px;text-align:center">';
+      html += '<div style="font-size:12px;color:#94a3b8">بسته شده @ '+fmt(p.closePrice)+reasonText+'</div>';
+      html += '<div style="font-size:18px;font-weight:800;margin-top:4px" class="'+pnlClass+'">'+pnlSign+livePct+'%</div>';
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+  b.innerHTML=html;
+}
+
+function drawHistory(){
+  var b=$("hb");
+  if(!S.history.length){ b.innerHTML='<div class="card empty"><div class="ico">🗂️</div><div>تاریخچه‌ای نیست</div></div>'; return; }
+  var html="";
+  S.history.forEach(function(h){
+    var p=pnlOf(h.entry,h.currentPrice||h.entry);
+    var cls=p.ok?"hist-item":"hist-item loss";
+    var pc=p.ok?"green":"red";
+    html+='<div class="card '+cls+'"><div class="row2"><div><div style="font-weight:700">'+h.symbol+'</div>'+
+      '<div style="font-size:11px;color:#94a3b8">'+h.signalTimeFa+' · '+h.classification+'</div></div>'+
+      '<div class="'+pc+'" style="font-weight:800;font-size:18px">'+(p.pct>0?"+":"")+p.pct+'%</div></div>'+
+      '<div class="grid3" style="margin-top:8px">'+
+      '<div><div style="color:#64748b;font-size:10px">ورود</div><div style="font-weight:600">'+fmt(h.entry)+'</div></div>'+
+      '<div><div style="color:#64748b;font-size:10px">فعلی</div><div style="font-weight:600">'+fmt(h.currentPrice||h.entry)+'</div></div>'+
+      '<div><div style="color:#64748b;font-size:10px">احتمال</div><div style="font-weight:600">'+(h.prob||"—")+'%</div></div></div>'+
+      '<div class="flex"><input type="number" placeholder="قیمت فعلی" id="h_'+h.id+'"/>'+
+      '<button onclick="setHistPrice(\''+h.id+'\')">بروز</button></div></div>';
+  });
+  b.innerHTML=html;
+}
+
+function setHistPrice(id){
+  var el=document.getElementById("h_"+id);
+  var v=parseFloat(el&&el.value);
+  if(!v) return;
+  for(var i=0;i<S.history.length;i++) if(S.history[i].id===id){ S.history[i].currentPrice=v; break; }
+  save(); drawHistory(); drawP();
+}
+
+async function refreshHistoryPrices(){
+  if(!S.history.length) return alert("تاریخچه خالی است");
+  $("st").textContent="بروزرسانی قیمت‌ها...";
+  var r=await fetchJSON("https://apiv2.nobitex.ir/market/stats");
+  if(!r.ok) r=await fetchJSON("https://api.nobitex.ir/market/stats");
+  if(!r.ok){ alert("نوبیتکس در دسترس نیست"); return; }
+  var map={};
+  var stats=(r.data&&r.data.stats)||{};
+  Object.keys(stats).forEach(function(k){
+    var row=stats[k];
+    if(row&&row.latest) map[k]=Number(row.latest);
+  });
+  S.history.forEach(function(h){
+    if(h.key&&map[h.key]) h.currentPrice=map[h.key];
+  });
+  save(); drawHistory(); drawP();
+  $("st").textContent="قیمت‌ها بروز شد";
+  alarm("بروز شد","قیمت تاریخچه از نوبیتکس گرفته شد");
+}
+
+function clearHistory(){
+  if(!confirm("همه تاریخچه پاک شود؟")) return;
+  S.history=[]; save(); drawHistory(); drawP();
+}
+
+function drawP(){
+  var b=$("pb");
+  var html = "";
+
+  // آمار پوزیشن‌ها
+  var openPos = S.positions.filter(function(p){return !p.closed;});
+  var closedPos = S.positions.filter(function(p){return p.closed;});
+  var totalPnl = 0, winCount=0;
+  closedPos.forEach(function(p){
+    totalPnl += p.pnlPct||0;
+    if((p.pnlPct||0)>0) winCount++;
+  });
+  var avgPnl = closedPos.length ? +(totalPnl/closedPos.length).toFixed(2) : 0;
+  var winrate = closedPos.length ? Math.round((winCount/closedPos.length)*100) : 0;
+
+  html += '<div class="card"><div class="lab" style="color:#94a3b8">پوزیشن‌های بسته شده</div>';
+  html += '<div class="score '+(avgPnl>=0?"green":"red")+'">'+(avgPnl>0?"+":"")+avgPnl+'%</div>';
+  html += '<div style="margin-top:6px;font-size:13px">وین‌ریت: <b class="'+(winrate>=55?"green":"amber")+'">'+winrate+'%</b> · تعداد: '+closedPos.length+'</div>';
+  html += '<div style="margin-top:4px;font-size:12px;color:#94a3b8">پوزیشن باز: '+openPos.length+'</div></div>';
+
+  if(!S.history.length && !S.positions.length){
+    b.innerHTML = html + '<div class="card empty">داده‌ای نیست</div>';
+    return;
+  }
+
+  // تاریخچه سیگنال‌ها
+  if(S.history.length){
+    var sum=0,n=0,wins=0;
+    S.history.forEach(function(h){
+      var p=pnlOf(h.entry,h.currentPrice||h.entry);
+      sum+=p.pct; n++;
+      if(p.pct>0) wins++;
+    });
+    var avg=n?+(sum/n).toFixed(2):0;
+    var wr=n?Math.round((wins/n)*100):0;
+    html += '<div class="card"><div class="lab" style="color:#94a3b8">میانگین بازده سیگنال‌ها</div><div class="score '+(avg>=0?"green":"red")+'">'+(avg>0?"+":"")+avg+'%</div>';
+    html += '<div style="margin-top:6px;font-size:13px">وین‌ریت تقریبی: <b>'+wr+'%</b></div></div>';
+  }
+
+  b.innerHTML=html;
+}
+
+if(notif) $("nb").textContent="🔔 فعال";
+draw();
+</script>
+</body>
+</html>
